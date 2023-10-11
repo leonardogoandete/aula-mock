@@ -1,0 +1,59 @@
+package edu.ifrs.business;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.logging.Logger;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class VehicleTest {
+
+    @Test
+    @DisplayName("Testando soma de adição de 5 cargas")
+    void testCheckandoSomaDoPesoDeCargas(){
+
+        int peso = 0;
+        Load loads[] = {new Load(10), new Load(20), new Load(30), new Load(40), new Load(50)};
+        for (int i=0;i<loads.length;i++) peso += loads[i].getWeight();
+        assertEquals(150,peso);
+    }
+
+
+    @Test
+    @DisplayName("Verificando carga com peso acima do limite")
+    void testCheckandoLimiteComPesoAcimaDoLimite() {
+        Vehicle vehicle = new Vehicle(100);
+        Load load = new Load(200);
+        vehicle.addWeight(load);
+        assertFalse(vehicle.checkWeightLimit());
+    }
+
+    @Test
+    @DisplayName("Verificando carga com peso abaixo do limite")
+    void testCheckandoLimiteComPesoAbaixoDoLimite() {
+        Vehicle vehicle = new Vehicle(100);
+        Load load = new Load(95);
+        vehicle.addWeight(load);
+        assertTrue(vehicle.checkWeightLimit());
+    }
+
+    @Test
+    @DisplayName("Verificando se a carga está com o peso inserido")
+    void testCheckandoSeACargaPossuiOPesoInserido() {
+        Vehicle vehicle = new Vehicle(100);
+        Load load = new Load(100);
+        vehicle.addWeight(load);
+        assertEquals(100,load.getWeight());
+    }
+
+    @Test
+    @DisplayName("Verificando se o veiculo estiver com carga zero e tentar inserir carga acima de zero")
+    void testCheckandoCargaDoVeiculoEhZeroEhAdicionandoCargaAcimaZero() {
+        Vehicle vehicle = new Vehicle(0);
+        Load load = new Load(100);
+        vehicle.addWeight(load);
+        assertFalse(vehicle.checkWeightLimit());
+    }
+
+}
